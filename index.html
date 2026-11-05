@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>APPLE AI PRO</title>
+
+<style>
+body {
+  background: #eaf3ff;
+  font-family: Arial;
+  text-align: center;
+  padding: 20px;
+}
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px #b8d0ef;
+}
+h1 { color: #1265c8; }
+button {
+  background: #1265c8;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 17px;
+  margin: 10px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 7px;
+}
+.cell {
+  background: #1265c8;
+  color: white;
+  padding: 15px 2px;
+  border-radius: 9px;
+  font-size: 20px;
+}
+#result {
+  color: #1265c8;
+  font-size: 22px;
+  font-weight: bold;
+  margin: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h1>🍎 APPLE AI PRO</h1>
+<p>Assistant Apple of Fortune</p>
+
+<p>🔵 2 pommes | ⚠️ 5 pièges</p>
+
+<h3>Suggestions de cases</h3>
+
+<div class="grid" id="grid"></div>
+
+<button onclick="generate()">
+GÉNÉRER UNE SUGGESTION
+</button>
+
+<div id="result">
+Tes suggestions apparaîtront ici.
+</div>
+
+<p id="history"></p>
+
+<p>⚠️ Suggestions aléatoires.
+Aucune garantie de gain.</p>
+</div>
+
+<script>
+let history = [];
+
+function generate() {
+  let choices = [];
+
+  while (choices.length < 2) {
+    let n = Math.floor(Math.random() * 7) + 1;
+    if (!choices.includes(n)) choices.push(n);
+  }
+
+  let cells = document.querySelectorAll(".cell");
+
+  cells.forEach((cell, i) => {
+    cell.style.background = "#1265c8";
+    cell.innerHTML = i + 1;
+  });
+
+  choices.forEach(n => {
+    cells[n-1].style.background = "#20a65a";
+    cells[n-1].innerHTML = "🍎";
+  });
+
+  document.getElementById("result").innerHTML =
+    "Suggestions : cases " + choices.join(" et ");
+
+  history.unshift(choices.join(" - "));
+  history = history.slice(0, 5);
+
+  document.getElementById("history").innerHTML =
+    "Historique :<br>" + history.join("<br>");
+}
+
+for (let i = 1; i <= 7; i++) {
+  let cell = document.createElement("div");
+  cell.className = "cell";
+  cell.innerHTML = i;
+  document.getElementById("grid").appendChild(cell);
+}
+</script>
+
+</body>
+</html>
